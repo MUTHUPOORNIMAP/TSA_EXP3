@@ -4,6 +4,10 @@ Date: 30-10-2026
 ### AIM:
 To Compute the AutoCorrelation Function (ACF) of the data for the first 35 lags to determine the model
 type to fit the data.
+### DATASET USED:
+BMW SALES DATASET.
+### SOFTWARE USED:
+GOOGLE NOTEBOOK
 ### ALGORITHM:
 1. Import the necessary packages
 2. Find the mean, variance and then implement normalization for the data.
@@ -12,39 +16,34 @@ type to fit the data.
 5. Represent the result in graphical representation as given below.
 ### PROGRAM:
 ```
+
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
-import numpy as np
+# Load CSV dataset
+data = pd.read_csv('/content/BMW_Car_Sales_Classification.csv')
 
-data = [3, 16, 156, 47, 246, 176, 233, 140, 130,
-101, 166, 201, 200, 116, 118, 247,
-209, 52, 153, 232, 128, 27, 192, 168, 208,
-187, 228, 86, 30, 151, 18, 254,
-76, 112, 67, 244, 179, 150, 89, 49, 83, 147, 90,
-33, 6, 158, 80, 35, 186, 127]
+# Get Sales Volume values
+data = data['Sales_Volume'].dropna().values
+
+N = len(data)
 
 lags = range(35)
-```
 
-#Pre-allocate autocorrelation table
-```
+# Pre-allocate autocorrelation table
 autocorr_values = []
-```
-#Mean
-```
-mean_data = np.mean(data)
-```
-#Variance
-```
-variance_data = np.var(data)
-```
-#Normalized data
-```
-normalized_data = (data - mean_data) / np.sqrt(variance_data)
-```
 
-#Go through lag components one-by-one
-```
+# Mean
+mean_data = np.mean(data)
+
+# Variance
+variance_data = np.var(data)
+
+# Normalized data
+normalized_data = (data - mean_data) / np.sqrt(variance_data)
+
+# Go through lag components one-by-one
 for lag in lags:
     if lag == 0:
         autocorr_values.append(1)
@@ -55,14 +54,12 @@ for lag in lags:
         ) / N
 
         autocorr_values.append(auto_cov / variance_data)
-```
 
-#display the graph
-```
+# Display the graph
 plt.figure(figsize=(10, 6))
 plt.stem(lags, autocorr_values)
 
-plt.title('Autocorrelation of Data')
+plt.title('Autocorrelation of BMW Sales Data')
 plt.xlabel('Lag')
 plt.ylabel('Autocorrelation')
 plt.grid(True)
@@ -72,7 +69,8 @@ plt.show()
 
 ### OUTPUT:
 
-<img width="1068" height="618" alt="image" src="https://github.com/user-attachments/assets/3fbb4797-5725-4a0b-95f3-f7ed48c0fb9f" />
+<img width="1062" height="611" alt="image" src="https://github.com/user-attachments/assets/e6369e29-58ff-4e15-a57f-659e0cf3d95f" />
+
 
 ### RESULT:
-        Thus we have successfully implemented the auto correlation function in python.
+        Thus we have successfully implemented the auto correlation function and has a sharp cuttoff.
